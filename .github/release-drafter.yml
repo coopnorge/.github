@@ -1,21 +1,26 @@
 name-template: "v$RESOLVED_VERSION"
 tag-template: "v$RESOLVED_VERSION"
 change-template: "- $TITLE (#$NUMBER) @$AUTHOR"
+change-title-escapes: '\<*_&'
 categories:
-  - title: "Major Changes"
+  - title: "🔥 BREAKING CHANGES"
     labels:
-      - "major" # c6476b
-  - title: "Minor Changes"
+      - "breaking-change"
+  - title: "🚀 Features"
     labels:
-      - "feature"
       - "enhancement"
-      - "refactoring"
-  - title: "Bugfixes"
+  - title: "🐛 Bug Fixes"
     labels:
-      - "bug"
-  - title: "Deprecations"
+      - "bug-fix"
+  - title: "👷 Chores"
     labels:
-      - "deprecated"
+      - "chore"
+  - title: "⚡️ Deprecations"
+    labels:
+      - "deprecation"
+  - title: "⬆️ Dependencies Upgraded"
+    labels:
+      - "dependency"
 exclude-labels:
   - "skip-changelog"
 replacers:
@@ -29,32 +34,70 @@ version-resolver:
   minor:
     labels:
       - "minor"
-      - "feature"
   patch:
     labels:
-      - "bug"
-      - "deprecated"
+      - "patch"
   default: patch
 exclude-contributors:
   - "dependabot"
 autolabeler:
-  - label: "skip-changelog"
+  # labels to help with version determination
+  - label: "patch"
     title:
-      - "/autoupdate/"
-      - "/^chore/i"
-      - "/^doc/i"
-  - label: "bug"
+      - "/^fix:/i"
+      - "/^chore:/i"
+      - "/^docs:/i"
+      - "/^refactor:/i"
+      - "/^test:/i"
+      - "/^deprecated:/i"
+  - label: "minor"
     title:
-      - "/^fix/i"
-  - label: "feature"
-    title:
-      - "/^feat/i"
-      - "/^feature/i"
-  - label: "deprecated"
-    title:
-      - "/^deprecate/i"
+      - "/^feat:/i"
+      - "/^feature:/i"
   - label: "major"
+    title:
+      - "/^feat!:/i"
+      - "/^feature!:/i"
+      - "/^fix!:/i"
+      - "/^chore!:/i"
+      - "/^docs!:/i"
+      - "/^refactor!:/i"
+      - "/^test!:/i"
+      - "/^deprecated!:/i"
+    body:
+      - "/BREAKING CHANGE:/"
+  # labels to help with changelog grouping
+  - label: "dependency"
+    title:
+      - "/^Bump/" # Dependency update PR by depandabot
+  - label: "chore"
+    title:
+      - "/^docs:/i"
+      - "/^chore:/i"
+      - "/^refactor:/i"
+      - "/^test:/i"
+  - label: "enhancements"
+    title:
+      - "/^feat:/i"
+      - "/^feature:/i"
+  - label: "bug-fix"
+    title:
+      - "/^fix:/i"
+  - label: "deprecation"
+    title:
+      - "/^deprecated:/i"
+  - label: "breaking-change"
+    title:
+      - "/^feat!:/i"
+      - "/^feature!:/i"
+      - "/^fix!:/i"
+      - "/^chore!:/i"
+      - "/^docs!:/i"
+      - "/^refactor!:/i"
+      - "/^test!:/i"
+      - "/^deprecated!:/i"
     body:
       - "/BREAKING CHANGE:/"
 template: |
+  ## What's Changed
   $CHANGES
