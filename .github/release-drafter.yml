@@ -53,7 +53,7 @@ autolabeler:
   - label: "deprecated"
     title:
       - "/^deprecate/i"
-  - labeld: "major"
+  - label: "major"
     body:
       - "/BREAKING CHANGE:/"
 template: |
