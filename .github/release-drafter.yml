@@ -42,28 +42,27 @@ exclude-contributors:
   - "dependabot"
 autolabeler:
   # labels to help with version determination
+  # if you want to play around with the regex here
+  # I will suggest doing so on https://regex101.com/
+  # it provides good explanation what what the regex is doing
+  # If that is not enough, ask chatgpt for help,
+  # and then go back to playing with regex on regex101.com
   - label: "patch"
     title:
-      - "/^fix:/i"
-      - "/^chore:/i"
-      - "/^docs:/i"
-      - "/^refactor:/i"
-      - "/^test:/i"
-      - "/^deprecated:/i"
+      # matches in format of "fix: ..."
+      # or "fix(scope): ..."
+      - "/^(?:fix|chore|docs|doc|refactor|test|deprecated)(?:\((?:[^)]+)\))?:\s.*/i"
   - label: "minor"
     title:
-      - "/^feat:/i"
-      - "/^feature:/i"
+      # matches in format of "feat: ..."
+      # or "feat(scope): ..."
+      - "/^(?:feat|feature)(?:\((?:[^)]+)\))?:\s.*/i"
   - label: "major"
     title:
-      - "/^feat!:/i"
-      - "/^feature!:/i"
-      - "/^fix!:/i"
-      - "/^chore!:/i"
-      - "/^docs!:/i"
-      - "/^refactor!:/i"
-      - "/^test!:/i"
-      - "/^deprecated!:/i"
+      # matches in format of "fix!: ..."
+      # or "fix!(scope): ..."
+      # or "fix(scope)!: ..."
+      - "/^(?:feat|feature|fix|chore|docs|doc|refactor|test|deprecated)(?:!(?:\((?:[^)]+)\))|(?:\((?:[^)]+)\))!|!):\s.*/i"
     body:
       - "/BREAKING CHANGE:/"
   # labels to help with changelog grouping
@@ -72,30 +71,19 @@ autolabeler:
       - "/^Bump/" # Dependency update PR by depandabot
   - label: "chore"
     title:
-      - "/^docs:/i"
-      - "/^chore:/i"
-      - "/^refactor:/i"
-      - "/^test:/i"
+      - "/^(?:docs|doc|chore|refactor|test)(?:\((?:[^)]+)\))?:\s.*/i"
   - label: "enhancements"
     title:
-      - "/^feat:/i"
-      - "/^feature:/i"
+      - "/^(?:feat|feature)(?:\((?:[^)]+)\))?:\s.*/i"
   - label: "bug-fix"
     title:
-      - "/^fix:/i"
+      - "/^fix(?:\((?:[^)]+)\))?:\s.*/i"
   - label: "deprecation"
     title:
-      - "/^deprecated:/i"
+      - "/^deprecated(?:\((?:[^)]+)\))?:\s.*/i"
   - label: "breaking-change"
     title:
-      - "/^feat!:/i"
-      - "/^feature!:/i"
-      - "/^fix!:/i"
-      - "/^chore!:/i"
-      - "/^docs!:/i"
-      - "/^refactor!:/i"
-      - "/^test!:/i"
-      - "/^deprecated!:/i"
+      - "/^(?:feat|feature|fix|chore|docs|doc|refactor|test|deprecated)(?:!(?:\((?:[^)]+)\))|(?:\((?:[^)]+)\))!|!):\s.*/i"
     body:
       - "/BREAKING CHANGE:/"
 template: |
