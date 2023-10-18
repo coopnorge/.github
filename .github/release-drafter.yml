@@ -1,21 +1,26 @@
 name-template: "v$RESOLVED_VERSION"
 tag-template: "v$RESOLVED_VERSION"
 change-template: "- $TITLE (#$NUMBER) @$AUTHOR"
+change-title-escapes: '\<*_&'
 categories:
-  - title: "Major Changes"
+  - title: "🔥 BREAKING CHANGES"
     labels:
-      - "major" # c6476b
-  - title: "Minor Changes"
+      - "breaking-change"
+  - title: "🚀 Features"
     labels:
-      - "feature"
       - "enhancement"
-      - "refactoring"
-  - title: "Bugfixes"
+  - title: "🐛 Bug Fixes"
     labels:
-      - "bug"
-  - title: "Deprecations"
+      - "bug-fix"
+  - title: "👷 Chores"
     labels:
-      - "deprecated"
+      - "chore"
+  - title: "⚡️ Deprecations"
+    labels:
+      - "deprecation"
+  - title: "⬆️ Dependencies Upgraded"
+    labels:
+      - "dependency"
 exclude-labels:
   - "skip-changelog"
 replacers:
@@ -29,32 +34,58 @@ version-resolver:
   minor:
     labels:
       - "minor"
-      - "feature"
   patch:
     labels:
-      - "bug"
-      - "deprecated"
+      - "patch"
   default: patch
 exclude-contributors:
   - "dependabot"
 autolabeler:
-  - label: "skip-changelog"
+  # labels to help with version determination
+  # if you want to play around with the regex here
+  # I will suggest doing so on https://regex101.com/
+  # it provides good explanation what what the regex is doing
+  # If that is not enough, ask chatgpt for help,
+  # and then go back to playing with regex on regex101.com
+  - label: "patch"
     title:
-      - "/autoupdate/"
-      - "/^chore/i"
-      - "/^doc/i"
-  - label: "bug"
+      # matches in format of "fix: ..."
+      # or "fix(scope): ..."
+      - '/^(?:fix|chore|docs|doc|refactor|test|deprecated)(?:\((?:[^)]+)\))?:\s.*/i'
+  - label: "minor"
     title:
-      - "/^fix/i"
-  - label: "feature"
-    title:
-      - "/^feat/i"
-      - "/^feature/i"
-  - label: "deprecated"
-    title:
-      - "/^deprecate/i"
+      # matches in format of "feat: ..."
+      # or "feat(scope): ..."
+      - '/^(?:feat|feature)(?:\((?:[^)]+)\))?:\s.*/i'
   - label: "major"
+    title:
+      # matches in format of "fix!: ..."
+      # or "fix!(scope): ..."
+      # or "fix(scope)!: ..."
+      - '/^(?:feat|feature|fix|chore|docs|doc|refactor|test|deprecated)(?:!(?:\((?:[^)]+)\))|(?:\((?:[^)]+)\))!|!):\s.*/i'
+    body:
+      - "/BREAKING CHANGE:/"
+  # labels to help with changelog grouping
+  - label: "dependency"
+    title:
+      - "/^Bump/" # Dependency update PR by depandabot
+  - label: "chore"
+    title:
+      - '/^(?:docs|doc|chore|refactor|test)(?:\((?:[^)]+)\))?:\s.*/i'
+  - label: "enhancements"
+    title:
+      - '/^(?:feat|feature)(?:\((?:[^)]+)\))?:\s.*/i'
+  - label: "bug-fix"
+    title:
+      - '/^fix(?:\((?:[^)]+)\))?:\s.*/i'
+  - label: "deprecation"
+    title:
+      - '/^deprecated(?:\((?:[^)]+)\))?:\s.*/i'
+  - label: "breaking-change"
+    title:
+      - '/^(?:feat|feature|fix|chore|docs|doc|refactor|test|deprecated)(?:!(?:\((?:[^)]+)\))|(?:\((?:[^)]+)\))!|!):\s.*/i'
     body:
       - "/BREAKING CHANGE:/"
 template: |
+  ## What's Changed
   $CHANGES
