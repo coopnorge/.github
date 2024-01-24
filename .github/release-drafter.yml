@@ -5,22 +5,22 @@ change-title-escapes: '\<*_&'
 categories:
   - title: "🔥 BREAKING CHANGES"
     labels:
-      - "breaking-change"
+      - "release-drafter:breaking-change"
   - title: "🚀 Features"
     labels:
-      - "enhancement"
+      - "release-drafter:enhancement"
   - title: "🐛 Bug Fixes"
     labels:
-      - "bug-fix"
+      - "release-drafter:bug-fix"
   - title: "👷 Chores"
     labels:
-      - "chore"
+      - "release-drafter:chore"
   - title: "⚡️ Deprecations"
     labels:
-      - "deprecation"
+      - "release-drafter:deprecation"
   - title: "⬆️ Dependencies Upgraded"
     labels:
-      - "dependency"
+      - "release-drafter:dependency"
 exclude-labels:
   - "skip-changelog"
 replacers:
@@ -30,13 +30,16 @@ replacers:
 version-resolver:
   major:
     labels:
-      - "major"
+      - "release-drafter:major"
+      - "release-drafter-go:major"
   minor:
     labels:
-      - "minor"
+      - "release-drafter:minor"
+      - "release-drafter-go:minor"
   patch:
     labels:
-      - "patch"
+      - "release-drafter:patch"
+      - "release-drafter-go:minor"
   default: patch
 exclude-contributors:
   - "dependabot"
@@ -47,17 +50,17 @@ autolabeler:
   # it provides good explanation what what the regex is doing
   # If that is not enough, ask chatgpt for help,
   # and then go back to playing with regex on regex101.com
-  - label: "patch"
+  - label: "release-drafter:patch"
     title:
       # matches in format of "fix: ..."
       # or "fix(scope): ..."
       - '/^(?:fix|chore|docs|doc|refactor|test|deprecated)(?:\((?:[^)]+)\))?:\s.*/i'
-  - label: "minor"
+  - label: "release-drafter:minor"
     title:
       # matches in format of "feat: ..."
       # or "feat(scope): ..."
       - '/^(?:feat|feature)(?:\((?:[^)]+)\))?:\s.*/i'
-  - label: "major"
+  - label: "release-drafter:major"
     title:
       # matches in format of "fix!: ..."
       # or "fix!(scope): ..."
@@ -66,22 +69,22 @@ autolabeler:
     body:
       - "/BREAKING CHANGE:/"
   # labels to help with changelog grouping
-  - label: "dependency"
+  - label: "release-drafter:dependency"
     title:
       - "/^Bump/" # Dependency update PR by depandabot
-  - label: "chore"
+  - label: "release-drafter:chore"
     title:
       - '/^(?:docs|doc|chore|refactor|test)(?:\((?:[^)]+)\))?:\s.*/i'
-  - label: "enhancements"
+  - label: "release-drafter:enhancements"
     title:
       - '/^(?:feat|feature)(?:\((?:[^)]+)\))?:\s.*/i'
-  - label: "bug-fix"
+  - label: "release-drafter:bug-fix"
     title:
       - '/^fix(?:\((?:[^)]+)\))?:\s.*/i'
-  - label: "deprecation"
+  - label: "release-drafter:deprecation"
     title:
       - '/^deprecated(?:\((?:[^)]+)\))?:\s.*/i'
-  - label: "breaking-change"
+  - label: "release-drafter:breaking-change"
     title:
       - '/^(?:feat|feature|fix|chore|docs|doc|refactor|test|deprecated)(?:!(?:\((?:[^)]+)\))|(?:\((?:[^)]+)\))!|!):\s.*/i'
     body:
