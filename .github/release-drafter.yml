@@ -71,7 +71,7 @@ autolabeler:
   # labels to help with changelog grouping
   - label: "release-drafter:dependency"
     title:
-      - "/^Bump/" # Dependency update PR by depandabot
+      - '^(?:Bump|(?:chore\(deps\):|chore\(deps-dev\)):)' # Dependency update PR by Dependabot
   - label: "release-drafter:chore"
     title:
       - '/^(?:docs|doc|chore|refactor|test)(?:\((?:[^)]+)\))?:\s.*/i'
