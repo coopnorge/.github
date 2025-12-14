@@ -1,0 +1,17 @@
+apiVersion: github.coop.no/v1alpha1
+kind: RepositoryConfig
+metadata:
+  name: .github
+spec:
+  description: "Global GitHub repository"
+
+  branches:
+    default: main
+    protection:
+      - id: main
+        pattern: main
+        requireSignedCommits: false
+        requiredStatusChecks:
+          checks:
+        requiredPullRequestReviews:
+          requireCodeOwnerReviews: true
