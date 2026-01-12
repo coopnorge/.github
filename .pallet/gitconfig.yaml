@@ -15,3 +15,4 @@ spec:
           checks:
         requiredPullRequestReviews:
           requireCodeOwnerReviews: true
+  visibility: public
