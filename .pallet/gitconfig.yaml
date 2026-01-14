@@ -4,14 +4,17 @@ metadata:
   name: .github
 spec:
   description: "Global GitHub repository"
+  visibility: "public"
+
 
   branches:
-    default: main
+    default: "main"
     protection:
-      - id: main
-        pattern: main
+      - id: "main"
+        pattern: "main"
         requireSignedCommits: false
         requiredStatusChecks:
           checks:
         requiredPullRequestReviews:
           requireCodeOwnerReviews: true
+
