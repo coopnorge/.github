@@ -14,5 +14,5 @@ spec:
         requiredStatusChecks:
           checks:
         requiredPullRequestReviews:
-          requireCodeOwnerReviews: true
+          requireCodeOwnerReviews: false
   visibility: public
