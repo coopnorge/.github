@@ -4,43 +4,56 @@ change-template: "- $TITLE (#$NUMBER) @$AUTHOR"
 change-title-escapes: '\<*_&'
 categories:
   - title: "🔥 BREAKING CHANGES"
-    labels:
-      - "release-drafter:breaking-change"
+    when:
+      label: "release-drafter:breaking-change"
   - title: "🚀 Features"
-    labels:
-      - "release-drafter:enhancement"
+    when:
+      label: "release-drafter:enhancement"
   - title: "🐛 Bug Fixes"
-    labels:
-      - "release-drafter:bug-fix"
+    when:
+      label: "release-drafter:bug-fix"
   - title: "👷 Chores"
-    labels:
-      - "release-drafter:chore"
+    when:
+      label: "release-drafter:chore"
   - title: "⚡️ Deprecations"
-    labels:
-      - "release-drafter:deprecation"
+    when:
+      label: "release-drafter:deprecation"
   - title: "⬆️ Dependencies Upgraded"
-    labels:
-      - "release-drafter:dependency"
-exclude-labels:
-  - "skip-changelog"
+    when:
+      label: "release-drafter:dependency"
+  - type: pre-exclude
+    when:
+      label: "skip-changelog"
+  - type: version-resolver
+    semver-increment: major
+    when:
+      label: "release-drafter:major"
+  - type: version-resolver
+    semver-increment: major
+    when:
+      label: "release-drafter-go:major"
+  - type: version-resolver
+    semver-increment: minor
+    when:
+      label: "release-drafter:minor"
+  - type: version-resolver
+    semver-increment: minor
+    when:
+      label: "release-drafter-go:minor"
+  - type: version-resolver
+    semver-increment: patch
+    when:
+      label: "release-drafter:patch"
+  - type: version-resolver
+    semver-increment: patch
+    when:
+      label: "release-drafter-go:minor"
+  - type: version-resolver
+    semver-increment: patch
 replacers:
   # https://github.com/release-drafter/release-drafter/issues/569#issuecomment-645938155
   - search: '(?:and )?@dependabot(?:\[bot\])?,?'
     replace: ""
-version-resolver:
-  major:
-    labels:
-      - "release-drafter:major"
-      - "release-drafter-go:major"
-  minor:
-    labels:
-      - "release-drafter:minor"
-      - "release-drafter-go:minor"
-  patch:
-    labels:
-      - "release-drafter:patch"
-      - "release-drafter-go:minor"
-  default: patch
 exclude-contributors:
   - "dependabot"
 autolabeler:
