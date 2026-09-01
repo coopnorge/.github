@@ -13,6 +13,7 @@ spec:
         requireSignedCommits: false
         requiredStatusChecks:
           checks:
+            - 'policy-bot: main'
         requiredPullRequestReviews:
           requireCodeOwnerReviews: false
   visibility: public
