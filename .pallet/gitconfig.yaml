@@ -1,7 +1,7 @@
 apiVersion: github.coop.no/v1alpha1
 kind: RepositoryConfig
 metadata:
-  name: .github
+  name: dot-github
 spec:
   description: "Global GitHub repository"
 
