@@ -10,7 +10,7 @@ concurrency:
 jobs:
   build:
     runs-on: ubuntu-slim
-    permissions: {}
+    permissions:
+      contents: read
     steps:
-      - name: Output message
-        run: echo Hi
+      - uses: release-drafter/release-drafter/check-pr@v7
