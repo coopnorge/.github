@@ -4,12 +4,10 @@ change-template: "- $TITLE (#$NUMBER) @$AUTHOR"
 change-title-escapes: '\<*_&'
 categories:
   - title: "🔥 BREAKING CHANGES"
-    exclusive: true
     when:
       label: "release-drafter:breaking-change"
   - title: "⬆️ Dependencies Upgraded"
     collapse-after: 5
-    exclusive: true
     when:
       label: "release-drafter:dependency"
   - title: "🚀 Features"
