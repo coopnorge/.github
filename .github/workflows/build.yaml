@@ -8,9 +8,22 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
+
   build:
     runs-on: ubuntu-slim
     permissions: {}
     steps:
       - name: Output message
         run: echo Hi
+
+  release-drafter-dry-run:
+    runs-on: ubuntu-slim
+    permissions:
+      contents: read
+      pull-requests: read
+    steps:
+      # Validates .github/release-drafter.yml without creating or changing releases.
+      - uses: release-drafter/release-drafter@72967cdc98ddd3160f1fc3dff619de365e137dd0 # v7.9.0
+        with:
+          config-name: release-drafter.yml
+          dry-run: true
